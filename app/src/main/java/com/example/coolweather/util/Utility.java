@@ -86,9 +86,23 @@ public class Utility {
     public static Weather handleWeatherResponse(String response){
         try{
             JSONObject jsonObject = new JSONObject(response);
-            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
-            String weatherContent = jsonArray.getJSONObject(0).toString();
-            return new Gson().fromJson(weatherContent,Weather.class);
+            Gson gson = new Gson();
+            Weather weather = gson.fromJson(jsonObject.toString(),Weather.class);
+            return weather;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+    /**
+     * 将返回的JSON数据解析成AQI实体类
+     */
+    public static AQI handleAQIResponse(String response){
+        try{
+            JSONObject jsonObject = new JSONObject(response);
+            Gson gson = new Gson();
+            AQI aqi = gson.fromJson(jsonObject.toString(),AQI.class);
+            return aqi;
         }catch (Exception e){
             e.printStackTrace();
         }
