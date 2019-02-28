@@ -52,6 +52,7 @@ public class AutoUpdateService extends Service {
     private void updateWeather(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather",null);
+        String aqiString = prefs.getString("aqi",null);
         if (weatherString != null){
             //有缓存时直接解析天气数据
             Weather weather = Utility.handleWeatherResponse(weatherString);
@@ -71,7 +72,7 @@ public class AutoUpdateService extends Service {
                     AQI aqi = Utility.handleAQIResponse(responseText);
                     if ((aqi != null) && "ok".equals(aqi.getHeWeather6().get(0).getStatus())){
                         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(AutoUpdateService.this).edit();
-                        editor.putString("weather",responseText);
+                        editor.putString("aqi",responseText);
                         editor.apply();
                     }
                 }
